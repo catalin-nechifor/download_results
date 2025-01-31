@@ -4,6 +4,9 @@ pipeline {
             label 'built-in'
             }
       }
+    triggers {
+        pollSCM '*/2 * * * *'
+    }
     stages {
         stage('Build') {
             steps {
