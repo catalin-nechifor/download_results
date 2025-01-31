@@ -12,6 +12,7 @@ pipeline {
             steps {
                 echo "Building.."
                 sh '''
+                echo $PATH
                 python3 getResults.py
                 '''
             }
