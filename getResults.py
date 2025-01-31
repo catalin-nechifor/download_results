@@ -76,7 +76,7 @@ def get_results(ip, mwUsername, mwPasswd):
 
 
         for i in range(0, len(data)):
-            with open("/home/catalin-ubuntu/download_results/testIds.txt", "r") as file:
+            with open("/home/catalin-ubuntu/testIds.txt", "r") as file:
                 lines = file.readlines()
                 
             # Check if the target string is in any of the lines
@@ -90,7 +90,7 @@ def get_results(ip, mwUsername, mwPasswd):
                 # If the string is not found, append it to the file and download the result
             else:
                 new_res = new_res + 1
-                with open("testIds.txt", "a") as file:
+                with open("/home/catalin-ubuntu/testIds.txt", "a") as file:
                     file.write(data[i]['id'] + "\n")  # Append the string as a new line
                     print("Result id " + data[i]['id'] + " appended to the list.")
                     try:
