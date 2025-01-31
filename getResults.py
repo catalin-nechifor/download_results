@@ -14,7 +14,7 @@ results_folder_path = '/home/nechifor/results_folder'
 # Get all IPs in the network range
 def get_ips_in_network():
     try:
-        result = subprocess.run(["nmap", "-sn", NETWORK_RANGE], stdout=subprocess.PIPE, text=True)
+        result = subprocess.run(["/usr/bin/nmap", "-sn", NETWORK_RANGE], stdout=subprocess.PIPE, text=True)
         output = result.stdout
         ips = [line.split()[-1].strip("()") for line in output.splitlines() if "Nmap scan report" in line]
         return ips
