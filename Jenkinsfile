@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Building.."
+                echo "Running getResults.py..."
                 sh '''
                 echo "ixia" | sudo -S python3 getResults.py
                 '''
