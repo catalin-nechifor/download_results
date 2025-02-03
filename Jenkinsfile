@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo "Building.."
                 sh '''
-                sudo su -c python3 getResults.py
+                python3 getResults.py
                 '''
             }
         }
