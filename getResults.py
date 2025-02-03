@@ -16,11 +16,11 @@ results_folder_path = '/home/nechifor/results_folder'
 def get_ips_in_network():
     try:
         nm=nmap.PortScanner()
-        #result = subprocess.run(["/usr/bin/nmap", "-sn", NETWORK_RANGE], stdout=subprocess.PIPE, text=True)
-        #output = result.stdout
-        #ips = [line.split()[-1].strip("()") for line in output.splitlines() if "Nmap scan report" in line]
-        nm.scan(hosts=NETWORK_RANGE, arguments="-sn")
-        ips = nm.all_hosts()
+        result = subprocess.run(["/usr/bin/nmap", "-sn", NETWORK_RANGE], stdout=subprocess.PIPE, text=True)
+        output = result.stdout
+        ips = [line.split()[-1].strip("()") for line in output.splitlines() if "Nmap scan report" in line]
+        #nm.scan(hosts=NETWORK_RANGE, arguments="-sn")
+        #ips = nm.all_hosts()
         return ips
     except Exception as e:
         print(f"Error scanning network: {e}")
