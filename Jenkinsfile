@@ -12,8 +12,7 @@ pipeline {
             steps {
                 echo "Building.."
                 sh '''
-                echo $PATH
-                python3 getResults.py
+                sudo su -c python3 getResults.py
                 '''
             }
         }
