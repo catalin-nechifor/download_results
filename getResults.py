@@ -8,19 +8,21 @@ from concurrent.futures import ThreadPoolExecutor
 import nmap
 
 # Configure your network range and API command
-NETWORK_RANGE = "10.38.157.0/24"  # Replace with your network range
+NETWORK_RANGES = ["10.38.155.0/24", "10.38.156.0/24","10.38.157.0/24","10.38.158.0/24","10.38.159.0/24"]  # Replace with your network range
 mwList = []
-results_folder_path = '/home/nechifor/results_folder'
-
+results_folder_path = '/home/catalin-ubuntu/results_folder'
+ips = []
 # Get all IPs in the network range
 def get_ips_in_network():
     try:
-        nm=nmap.PortScanner()
-        result = subprocess.run(["/usr/bin/nmap", "-sn", NETWORK_RANGE], stdout=subprocess.PIPE, text=True)
-        output = result.stdout
-        ips = [line.split()[-1].strip("()") for line in output.splitlines() if "Nmap scan report" in line]
-        #nm.scan(hosts=NETWORK_RANGE, arguments="-sn")
-        #ips = nm.all_hosts()
+        for NETWORK_RANGE in NETWORK_RANGES:
+        #nm=nmap.PortScanner()
+            result = subprocess.run(["/usr/bin/nmap", "-sn", NETWORK_RANGE], stdout=subprocess.PIPE, text=True)
+            output = result.stdout
+            ipList = [line.split()[-1].strip("()") for line in output.splitlines() if "Nmap scan report" in line]
+            #nm.scan(hosts=NETWORK_RANGE, arguments="-sn")
+            #ips = nm.all_hosts()
+            ips.append(ipList)
         return ips
     except Exception as e:
         print(f"Error scanning network: {e}")
@@ -62,6 +64,7 @@ def get_mw_ips(ip, mwUsername, mwPasswd):
         response = requests.get('https://{}/api/v2/deployment/helm/cluster/releases'.format(ip), headers=getToken(ip, mwUsername, mwPasswd), verify=False)
         if "load-core" in response.text:
             mwList.append(ip)
+            print(mwList)
 
     except requests.exceptions.RequestException as e:
         print("")
@@ -76,7 +79,7 @@ def get_results(ip, mwUsername, mwPasswd):
 
 
         for i in range(0, len(data)):
-            with open("/home/catalin-ubuntu/testIds.txt", "r") as file:
+            with open("testIds.txt", "r") as file:
                 lines = file.readlines()
                 
             # Check if the target string is in any of the lines
@@ -90,7 +93,7 @@ def get_results(ip, mwUsername, mwPasswd):
                 # If the string is not found, append it to the file and download the result
             else:
                 new_res = new_res + 1
-                with open("/home/catalin-ubuntu/testIds.txt", "a") as file:
+                with open("testIds.txt", "a") as file:
                     file.write(data[i]['id'] + "\n")  # Append the string as a new line
                     print("Result id " + data[i]['id'] + " appended to the list.")
                     try:
@@ -122,12 +125,16 @@ def get_results(ip, mwUsername, mwPasswd):
 def main():
     print("Scanning network for devices...")
     ips = get_ips_in_network()
+    #print(ips)
     print(f"Found {len(ips)} devices in the network.")
 
     with ThreadPoolExecutor(max_workers=10) as executor:
         for ip in ips:
+            for ip2 in ip:
             #if ping_ip(ip):
-            executor.submit(get_mw_ips, ip, "admin", "admin")
+                print("here")
+                print(ip2)
+                executor.submit(get_mw_ips, ip2, "admin", "admin")
 
     for ip in mwList:
         get_results(ip, "admin", "admin")
