@@ -79,7 +79,7 @@ def get_results(ip, mwUsername, mwPasswd):
 
 
         for i in range(0, len(data)):
-            with open("testIds.txt", "r") as file:
+            with open("/home/catalin-ubuntu/testIds.txt", "r") as file:
                 lines = file.readlines()
                 
             # Check if the target string is in any of the lines
