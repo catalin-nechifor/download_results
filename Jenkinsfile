@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo "Building.."
                 sh '''
-                python3 getResults.py
+                echo "ixia" | sudo -S python3 getResults.py
                 '''
             }
         }
