@@ -93,7 +93,7 @@ def get_results(ip, mwUsername, mwPasswd):
                 # If the string is not found, append it to the file and download the result
             else:
                 new_res = new_res + 1
-                with open("testIds.txt", "a") as file:
+                with open("/home/catalin-ubuntu/testIds.txt", "a") as file:
                     file.write(data[i]['id'] + "\n")  # Append the string as a new line
                     print("Result id " + data[i]['id'] + " appended to the list.")
                     try:
