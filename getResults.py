@@ -8,7 +8,7 @@ from concurrent.futures import ThreadPoolExecutor
 import nmap
 
 # Configure your network range and API command
-NETWORK_RANGE = "10.38.155.0/24"  # Replace with your network range
+NETWORK_RANGE = "10.38.156.0/24"  # Replace with your network range
 mwList = []
 results_folder_path = '/home/nechifor/results_folder'
 
